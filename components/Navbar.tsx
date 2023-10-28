@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "./ui/button";
 import {
@@ -9,6 +11,7 @@ import {
   SheetTrigger
 } from "./ui/sheet";
 import { ArrowRight, Menu } from "lucide-react";
+import Link from "next/link";
 
 interface MenuItemProps {
   title: string;
@@ -43,7 +46,12 @@ function Navbar() {
         <MenuItem title="Donation Box" />
         <MenuItem title="Contact" />
 
-        <Button variant="outline">Login / Signup</Button>
+        <div className="flex gap-2">
+          <Button>Login</Button>
+          <Button variant="outline" className="border-black">
+            Signup
+          </Button>
+        </div>
       </div>
       <div className="block md:hidden">
         <Sheet>
@@ -65,8 +73,15 @@ function Navbar() {
                   </div>
                 </SheetDescription>
               </div>
-              <div>
-                <Button className="w-full">Login / Signup</Button>
+              <div className="flex flex-col gap-2">
+                <Link href="/login">
+                  <Button className="w-full">Login</Button>
+                </Link>
+                <Link href="/signup">
+                  <Button className="w-full border-black" variant="outline">
+                    Signup
+                  </Button>
+                </Link>
               </div>
             </section>
           </SheetContent>
