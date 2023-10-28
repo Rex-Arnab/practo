@@ -4,6 +4,13 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader } from "lucide-react";
 import { useState } from "react";
@@ -25,6 +32,44 @@ function LoginPage() {
 
   const handleSignup = async () => {
     setLoading(true);
+    if (password !== confirm_password) {
+      toast({
+        title: "Password Mismatch",
+        description: "Please Check Your Password",
+        variant: "primary"
+      });
+      setLoading(false);
+      return;
+    }
+    if (!acknowledgement) {
+      toast({
+        title: "Acknowledgement Required",
+        description: "Please Check The Acknowledgement",
+        variant: "primary"
+      });
+      setLoading(false);
+      return;
+    }
+    if (
+      !name ||
+      !email ||
+      !blood_group ||
+      !phone_number ||
+      !age ||
+      !nearest_hospital ||
+      !state ||
+      !district ||
+      !password
+    ) {
+      toast({
+        title: "Missing Fields",
+        description: "Please Fill All The Fields",
+        variant: "primary"
+      });
+      setLoading(false);
+      return;
+    }
+
     setTimeout(() => {
       toast({
         title: "Application Saved",
@@ -59,11 +104,27 @@ function LoginPage() {
               onChange={(e) => setPhone_number(e.target.value)}
             />
 
-            <Input
-              placeholder="Enter Your Blood Group"
-              value={blood_group}
-              onChange={(e) => setBlood_group(e.target.value)}
-            />
+            <Select
+              onValueChange={(value) => {
+                setBlood_group(value);
+              }}>
+              <SelectTrigger>
+                <SelectValue
+                  placeholder="Select Blood Group"
+                  className=" placeholder:text-muted-foreground"
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ap">A+</SelectItem>
+                <SelectItem value="an">A-</SelectItem>
+                <SelectItem value="bp">B+</SelectItem>
+                <SelectItem value="bn">B-</SelectItem>
+                <SelectItem value="abp">AB+</SelectItem>
+                <SelectItem value="abn">AB-</SelectItem>
+                <SelectItem value="op">O+</SelectItem>
+                <SelectItem value="on">O-</SelectItem>
+              </SelectContent>
+            </Select>
 
             <Input
               placeholder="Enter Your Nearest Govt Hospital"
@@ -82,13 +143,13 @@ function LoginPage() {
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
             />
-          </div>
 
-          <Input
-            placeholder="Enter Your Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <Input
+              placeholder="Enter Your Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <Input
