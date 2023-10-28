@@ -37,7 +37,9 @@ const MenuItemMobile = ({ title }: MenuItemProps) => {
 function Navbar() {
   return (
     <nav className="bg-white p-5 shadow flex items-center justify-between">
-      <div className="text-xl font-bold">Practo</div>
+      <Link href="/">
+        <div className="text-xl font-bold">Practo</div>
+      </Link>
       <div className="hidden lg:flex items-center gap-5">
         <MenuItem title="About" />
         <MenuItem title="Our Service" />
