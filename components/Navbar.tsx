@@ -38,7 +38,7 @@ function Navbar() {
   return (
     <nav className="bg-white p-5 shadow flex items-center justify-between">
       <div className="text-xl font-bold">Practo</div>
-      <div className="hidden md:flex items-center gap-5">
+      <div className="hidden lg:flex items-center gap-5">
         <MenuItem title="About" />
         <MenuItem title="Our Service" />
         <MenuItem title="Doctor Consultation" />
@@ -47,13 +47,17 @@ function Navbar() {
         <MenuItem title="Contact" />
 
         <div className="flex gap-2">
-          <Button>Login</Button>
-          <Button variant="outline" className="border-black">
-            Signup
-          </Button>
+          <Link href="/login">
+            <Button>Login</Button>
+          </Link>
+          <Link href="/signup">
+            <Button variant="outline" className="border-black">
+              Signup
+            </Button>
+          </Link>
         </div>
       </div>
-      <div className="block md:hidden">
+      <div className="block lg:hidden">
         <Sheet>
           <SheetTrigger>
             <Menu size={32} />

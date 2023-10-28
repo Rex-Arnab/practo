@@ -23,7 +23,7 @@ const OfferCard = ({
   textColor
 }: OfferCardProps) => {
   return (
-    <Card className="w-[300px] rounded-xl shadow">
+    <Card className="w-full sm:w-[250px] rounded-xl shadow">
       {image && (
         <div
           className={cn(
@@ -58,7 +58,7 @@ const OfferCard = ({
 function Offering() {
   return (
     <section>
-      <h1 className="text-3xl font-bold my-2 text-gray-800">Our Offering</h1>
+      <h1 className="text-3xl font-bold my-5 text-gray-800">Our Offering</h1>
       <main className="flex items-stretch gap-5 flex-wrap">
         <OfferCard
           title="Blood Donor"

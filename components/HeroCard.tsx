@@ -7,7 +7,7 @@ import Link from "next/link";
 
 function HeroCard() {
   return (
-    <section className="bg-gradient-to-r from-purple-800 to-purple-950 text-white shadow-xl rounded-xl flex flex-col md:flex-row items-center justify-between max-w-4xl mx-auto">
+    <section className="bg-gradient-to-r from-purple-800 to-purple-950 text-white shadow-xl rounded-xl flex flex-col md:flex-row items-center justify-between">
       <div className="space-y-5 p-5">
         <div className="flex flex-col md:flex-row md:items-center gap-2">
           <h1 className="text-3xl font-bold">Practo Demo</h1>
