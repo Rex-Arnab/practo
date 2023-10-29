@@ -12,6 +12,7 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import axios from "axios";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 
@@ -19,8 +20,6 @@ function LoginPage() {
   const [name, setName] = useState("");
   const [phone_number, setPhone_number] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm_password, setConfirm_password] = useState("");
   const [age, setAge] = useState("");
   const [loading, setLoading] = useState(false);
   const [blood_group, setBlood_group] = useState("");
@@ -32,15 +31,6 @@ function LoginPage() {
 
   const handleSignup = async () => {
     setLoading(true);
-    if (password !== confirm_password) {
-      toast({
-        title: "Password Mismatch",
-        description: "Please Check Your Password",
-        variant: "primary"
-      });
-      setLoading(false);
-      return;
-    }
     if (!acknowledgement) {
       toast({
         title: "Acknowledgement Required",
@@ -58,26 +48,39 @@ function LoginPage() {
       !age ||
       !nearest_hospital ||
       !state ||
-      !district ||
-      !password
+      !district
     ) {
       toast({
         title: "Missing Fields",
         description: "Please Fill All The Fields",
         variant: "primary"
       });
-      setLoading(false);
-      return;
-    }
 
-    setTimeout(() => {
-      toast({
-        title: "Application Saved",
-        description: "Thank You For Registering",
-        variant: "primary"
-      });
-      setLoading(false);
-    }, 2000);
+      axios
+        .post("/api/admin/applications/create", {
+          name,
+          email,
+          phone_number,
+          age,
+          blood_group,
+          nearest_hospital,
+          district,
+          state
+        })
+        .then((res) => {
+          toast({
+            title: "Application Saved",
+            description: "Thank You For Registering",
+            variant: "primary"
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   };
   return (
     <section className="min-h-screen bg-slate-200">
@@ -148,20 +151,6 @@ function LoginPage() {
               placeholder="Enter Your Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <Input
-              placeholder="Enter Your Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <Input
-              placeholder="Confirm Your Password"
-              value={confirm_password}
-              onChange={(e) => setConfirm_password(e.target.value)}
             />
           </div>
 
