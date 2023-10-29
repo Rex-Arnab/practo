@@ -45,7 +45,9 @@ function AdminNavbar() {
         <Link href="/admin/application">
           <MenuItem title="Application" />
         </Link>
-        <AdminAvatar />
+        <Link href="/admin">
+          <AdminAvatar />
+        </Link>
       </div>
       <div className="block lg:hidden">
         <Sheet>
@@ -60,23 +62,15 @@ function AdminNavbar() {
                 </Link>
                 <SheetDescription>
                   <div>
-                    <MenuItemMobile title="About" />
-                    <MenuItemMobile title="Our Service" />
-                    <MenuItemMobile title="Doctor Consultation" />
-                    <MenuItemMobile title="Book Blood Test" />
-                    <MenuItemMobile title="Donation Box" />
-                    <MenuItemMobile title="Contact" />
+                    <Link href="/admin/application">
+                      <MenuItemMobile title="Application" />
+                    </Link>
                   </div>
                 </SheetDescription>
               </div>
-              <div className="flex flex-col gap-2">
-                <Link href="/login">
-                  <Button className="w-full">Login</Button>
-                </Link>
-                <Link href="/signup">
-                  <Button className="w-full border-black" variant="outline">
-                    Signup
-                  </Button>
+              <div className="flex flex-col">
+                <Link href="/admin">
+                  <Button className="w-full">Logout</Button>
                 </Link>
               </div>
             </section>
