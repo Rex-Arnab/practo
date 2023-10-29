@@ -9,7 +9,27 @@
     "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
-    "**/.factorypath": true
+    "**/.factorypath": true,
+    "yarn.lock": true,
+    ".eslintrc.json": true,
+    "node_modules": true,
+    "next-env.d.ts": true,
+    "postcss.config.js": true,
+    "tailwind.config.ts": true,
+    "tsconfig.json": true,
+    ".next": true,
+    ".vscode": true
   },
-  "hide-files.files": []
+  "hide-files.files": [
+    "yarn.lock",
+    ".eslintrc.json",
+    "node_modules",
+    "next-env.d.ts",
+    "postcss.config.js",
+    "tailwind.config.ts",
+    "tsconfig.json",
+    ".next",
+    ".vscode",
+    "app/favicon.ico"
+  ]
 }

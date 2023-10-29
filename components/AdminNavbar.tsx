@@ -12,6 +12,7 @@ import {
 } from "./ui/sheet";
 import { ArrowRight, Menu } from "lucide-react";
 import Link from "next/link";
+import AdminAvatar from "./AdminAvatar";
 
 interface MenuItemProps {
   title: string;
@@ -19,7 +20,7 @@ interface MenuItemProps {
 
 const MenuItem = ({ title }: MenuItemProps) => {
   return (
-    <div className="p-2 border-b-4 border-transparent hover:border-black cursor-pointer">
+    <div className="p-2 cursor-pointer hover:text-gray-300">
       <span>{title}</span>
     </div>
   );
@@ -34,30 +35,17 @@ const MenuItemMobile = ({ title }: MenuItemProps) => {
   );
 };
 
-function Navbar() {
+function AdminNavbar() {
   return (
-    <nav className="bg-white p-5 shadow flex items-center justify-between">
-      <Link href="/">
-        <div className="text-xl font-bold">Practo</div>
+    <nav className="bg-primary text-white p-5 shadow flex items-center justify-between">
+      <Link href="/admin/dashboard">
+        <div className="text-xl font-bold hover:text-gray-300">Admin Panel</div>
       </Link>
       <div className="hidden lg:flex items-center gap-5">
-        <MenuItem title="About" />
-        <MenuItem title="Our Service" />
-        <MenuItem title="Doctor Consultation" />
-        <MenuItem title="Book Blood Test" />
-        <MenuItem title="Donation Box" />
-        <MenuItem title="Contact" />
-
-        <div className="flex gap-2">
-          <Link href="/login">
-            <Button>Login</Button>
-          </Link>
-          <Link href="/signup">
-            <Button variant="outline" className="border-black">
-              Signup
-            </Button>
-          </Link>
-        </div>
+        <Link href="/admin/application">
+          <MenuItem title="Application" />
+        </Link>
+        <AdminAvatar />
       </div>
       <div className="block lg:hidden">
         <Sheet>
@@ -99,4 +87,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default AdminNavbar;

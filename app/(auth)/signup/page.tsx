@@ -82,7 +82,7 @@ function LoginPage() {
   return (
     <section className="min-h-screen bg-slate-200">
       <Navbar />
-      <main className="p-2 md:p-5 max-w-4xl mx-auto space-y-5">
+      <main className="p-5 md:p-5 max-w-4xl mx-auto space-y-5">
         <h1 className="text-2xl font-bold mt-5">Register Your Application</h1>
         <div className="p-2 md:p-5 bg-white rounded shadow space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -175,7 +175,7 @@ function LoginPage() {
             <label
               htmlFor="acknowledgement"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Clicking by Knowing that I am in Medical Emergency
+              I am in Medical Emergency
             </label>
           </div>
 
