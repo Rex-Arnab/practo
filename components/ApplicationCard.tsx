@@ -28,7 +28,9 @@ function ApplicationCard({
         <h1>{phone_number}</h1>
       </div>
       <div className="mt-4 flex gap-4">
-        <Button className="w-full">View</Button>
+        <Button className="w-full" disabled={true}>
+          View
+        </Button>
         <Button
           className="w-full"
           variant="destructive"

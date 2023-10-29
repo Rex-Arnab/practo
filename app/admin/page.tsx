@@ -50,7 +50,7 @@ function AdminPanelLogin() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button onClick={handleSubmit} disabled={loading}>
+        <Button className="w-full" onClick={handleSubmit} disabled={loading}>
           {loading ? (
             <Loader className="animate-spin" size={16} color="white" />
           ) : (
