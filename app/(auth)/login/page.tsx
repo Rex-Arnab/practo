@@ -4,7 +4,9 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import axios from "axios";
 import { Eye, EyeOff, Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function LoginPage() {
@@ -12,18 +14,32 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
   const [togglePassword, setTogglePassword] = useState(false);
 
   const handleLogin = async () => {
     setLoading(true);
-    setTimeout(() => {
-      toast({
-        title: "Login Failed",
-        description: "Incorrect Email or Password",
-        variant: "primary"
+    axios
+      .post("/api/login", { email, password })
+      .then((res: any) => {
+        toast({
+          title: "Login Successful",
+          description: "Welcome Back",
+          variant: "primary"
+        });
+        router.push("/user/dashboard");
+      })
+      .catch((err: any) => {
+        toast({
+          title: "Login Failed",
+          description: "Incorrect Email or Password",
+          variant: "primary"
+        });
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-      setLoading(false);
-    }, 2000);
   };
   return (
     <section className="min-h-screen bg-slate-200">
