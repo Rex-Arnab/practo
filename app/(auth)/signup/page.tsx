@@ -13,43 +13,25 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import { Loader } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
 import { useState } from "react";
 
 function LoginPage() {
-  const [name, setName] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [phone_number, setPhone_number] = useState("");
   const [email, setEmail] = useState("");
-  const [age, setAge] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm_password, setConfirmPassword] = useState("");
+  const [togglePassword, setTogglePassword] = useState(false);
+  const [toggleCPassword, setToggleCPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [blood_group, setBlood_group] = useState("");
-  const [nearest_hospital, setNearest_hospital] = useState("");
-  const [state, setState] = useState("");
-  const [district, setDistrict] = useState("");
-  const [acknowledgement, setAcknowledgement] = useState(false);
   const { toast } = useToast();
 
   const handleSignup = async () => {
     setLoading(true);
-    if (!acknowledgement) {
-      toast({
-        title: "Acknowledgement Required",
-        description: "Please Check The Acknowledgement",
-        variant: "primary"
-      });
-      setLoading(false);
-      return;
-    }
-    if (
-      !name ||
-      !email ||
-      !blood_group ||
-      !phone_number ||
-      !age ||
-      !nearest_hospital ||
-      !state ||
-      !district
-    ) {
+
+    if (!firstname || !lastname || !email || !phone_number) {
       toast({
         title: "Missing Fields",
         description: "Please Fill All The Fields",
@@ -58,23 +40,19 @@ function LoginPage() {
 
       axios
         .post("/api/admin/applications/create", {
-          name,
+          firstname,
+          lastname,
           email,
-          phone_number,
-          age,
-          blood_group,
-          nearest_hospital,
-          district,
-          state
+          phone_number
         })
-        .then((res) => {
+        .then((res: any) => {
           toast({
-            title: "Application Saved",
+            title: "Registration Successful",
             description: "Thank You For Registering",
             variant: "primary"
           });
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log(err);
         })
         .finally(() => {
@@ -86,19 +64,19 @@ function LoginPage() {
     <section className="min-h-screen bg-slate-200">
       <Navbar />
       <main className="p-5 md:p-5 max-w-4xl mx-auto space-y-5">
-        <h1 className="text-2xl font-bold mt-5">Register Your Application</h1>
+        <h1 className="text-2xl font-bold mt-5">Register Your Account</h1>
         <div className="p-2 md:p-5 bg-white rounded shadow space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <Input
-              placeholder="Enter Your Full Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter Your First Name"
+              value={firstname}
+              onChange={(e) => setFirstName(e.target.value)}
             />
 
             <Input
-              placeholder="Enter Your Age"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
+              placeholder="Enter Your Last Name"
+              value={lastname}
+              onChange={(e) => setLastName(e.target.value)}
             />
 
             <Input
@@ -107,71 +85,59 @@ function LoginPage() {
               onChange={(e) => setPhone_number(e.target.value)}
             />
 
-            <Select
-              onValueChange={(value) => {
-                setBlood_group(value);
-              }}>
-              <SelectTrigger>
-                <SelectValue
-                  placeholder="Select Blood Group"
-                  className=" placeholder:text-muted-foreground"
-                />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ap">A+</SelectItem>
-                <SelectItem value="an">A-</SelectItem>
-                <SelectItem value="bp">B+</SelectItem>
-                <SelectItem value="bn">B-</SelectItem>
-                <SelectItem value="abp">AB+</SelectItem>
-                <SelectItem value="abn">AB-</SelectItem>
-                <SelectItem value="op">O+</SelectItem>
-                <SelectItem value="on">O-</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Input
-              placeholder="Enter Your Nearest Govt Hospital"
-              value={nearest_hospital}
-              onChange={(e) => setNearest_hospital(e.target.value)}
-            />
-
-            <Input
-              placeholder="Enter Your State"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            />
-
-            <Input
-              placeholder="Enter Your District"
-              value={district}
-              onChange={(e) => setDistrict(e.target.value)}
-            />
-
             <Input
               placeholder="Enter Your Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-          </div>
 
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="acknowledgement"
-              checked={acknowledgement}
-              onClick={() => setAcknowledgement(!acknowledgement)}
-              disabled={loading}
-            />
-            <label
-              htmlFor="acknowledgement"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              I am in Medical Emergency
-            </label>
+            <div className="flex items-center justify-between mr-2">
+              <Input
+                placeholder="Enter Your password"
+                type={togglePassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mr-2"
+              />
+              {togglePassword ? (
+                <Eye
+                  className="h-5 w-5 cursor-pointer select-none"
+                  onClick={() => setTogglePassword(false)}
+                />
+              ) : (
+                <EyeOff
+                  className="h-5 w-5 cursor-pointer select-none"
+                  onClick={() => setTogglePassword(true)}
+                />
+              )}
+            </div>
+
+            <div className="flex items-center justify-between mr-2">
+              <Input
+                placeholder="Confirm password"
+                type={togglePassword ? "text" : "password"}
+                value={confirm_password}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="mr-2"
+              />
+              {toggleCPassword ? (
+                <Eye
+                  className="h-5 w-5 cursor-pointer select-none"
+                  onClick={() => setToggleCPassword(false)}
+                />
+              ) : (
+                <EyeOff
+                  className="h-5 w-5 cursor-pointer select-none"
+                  onClick={() => setToggleCPassword(true)}
+                />
+              )}
+            </div>
           </div>
 
           <Button
             className="w-full transition duration-200 ease-in-out"
             onClick={handleSignup}
-            disabled={!acknowledgement}>
+            disabled={!loading}>
             {loading ? <Loader className="h-4 w-4 animate-spin" /> : "Register"}
           </Button>
         </div>
