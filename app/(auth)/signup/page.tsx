@@ -2,15 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { Eye, EyeOff, Loader } from "lucide-react";
@@ -37,28 +29,35 @@ function LoginPage() {
         description: "Please Fill All The Fields",
         variant: "primary"
       });
-
-      axios
-        .post("/api/admin/applications/create", {
-          firstname,
-          lastname,
-          email,
-          phone_number
-        })
-        .then((res: any) => {
-          toast({
-            title: "Registration Successful",
-            description: "Thank You For Registering",
-            variant: "primary"
-          });
-        })
-        .catch((err: any) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+    } else if (password !== confirm_password) {
+      toast({
+        title: "Password Mismatch",
+        description: "Please Check Your Password",
+        variant: "destructive"
+      });
     }
+
+    axios
+      .post("/api/register", {
+        email,
+        password,
+        firstname,
+        lastname,
+        phone: phone_number
+      })
+      .then((res: any) => {
+        toast({
+          title: "Registration Successful",
+          description: "Thank You For Registering,You Can Now Login",
+          variant: "primary"
+        });
+      })
+      .catch((err: any) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <section className="min-h-screen bg-slate-200">
@@ -140,6 +139,12 @@ function LoginPage() {
             disabled={!loading}>
             {loading ? <Loader className="h-4 w-4 animate-spin" /> : "Register"}
           </Button>
+          <p className="text-center">
+            Already Have An Account?{" "}
+            <a href="/login" className="text-blue-500">
+              Login
+            </a>
+          </p>
         </div>
       </main>
     </section>
