@@ -53,6 +53,11 @@ function LoginPage() {
         });
       })
       .catch((err: any) => {
+        toast({
+          title: "Registration Failed",
+          description: "Please Check Your Details",
+          variant: "destructive"
+        });
         console.log(err);
       })
       .finally(() => {
@@ -136,7 +141,7 @@ function LoginPage() {
           <Button
             className="w-full transition duration-200 ease-in-out"
             onClick={handleSignup}
-            disabled={!loading}>
+            disabled={password !== confirm_password || loading}>
             {loading ? <Loader className="h-4 w-4 animate-spin" /> : "Register"}
           </Button>
           <p className="text-center">

@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 async function handler(req: Request) {
   await dbConnect();
+  console.log("Trigger Register");
 
   const body = await req.json();
   const { email, password, firstname, lastname, phone } = body;

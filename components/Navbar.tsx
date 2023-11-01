@@ -1,20 +1,27 @@
 "use client";
 
-import Image from "next/image";
 import { Button } from "./ui/button";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetHeader,
   SheetTitle,
   SheetTrigger
 } from "./ui/sheet";
-import { ArrowRight, Menu } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUp, Menu } from "lucide-react";
 import Link from "next/link";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger
+} from "./ui/collapsible";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface MenuItemProps {
   title: string;
+  className?: string;
+  Icon?: any;
 }
 
 const MenuItem = ({ title }: MenuItemProps) => {
@@ -25,18 +32,74 @@ const MenuItem = ({ title }: MenuItemProps) => {
   );
 };
 
-const MenuItemMobile = ({ title }: MenuItemProps) => {
+const MenuItemMobile = ({
+  title,
+  className,
+  Icon = ArrowRight
+}: MenuItemProps) => {
   return (
-    <div className="p-2 border font-semibold flex justify-between items-center hover:border-black hover:font-bold hover:text-black cursor-pointer">
+    <div
+      className={cn(
+        "p-2 border font-semibold flex justify-between items-center hover:border-black hover:font-bold hover:text-black cursor-pointer",
+        className
+      )}>
       <span>{title}</span>
-      <ArrowRight size={16} />
+      <Icon size={16} />
     </div>
   );
 };
 
 function Navbar() {
+  const [toggle, setToggle] = useState(false);
   return (
     <nav className="bg-white p-5 shadow flex items-center justify-between">
+      <div className="block lg:hidden">
+        <Sheet>
+          <SheetTrigger>
+            <Menu size={32} />
+          </SheetTrigger>
+          <SheetContent side="left">
+            <section className="flex flex-col justify-between min-h-full">
+              <div>
+                <Link href="/">
+                  <SheetTitle className="my-2 text-xl">Practo</SheetTitle>
+                </Link>
+                <SheetDescription>
+                  <div>
+                    <MenuItemMobile title="About" />
+                    <Collapsible>
+                      <CollapsibleTrigger
+                        className="w-full"
+                        onClick={() => setToggle(!toggle)}>
+                        <MenuItemMobile
+                          title="Our Service"
+                          Icon={toggle ? ArrowUp : ArrowDown}
+                        />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="ml-5">
+                        <MenuItemMobile title="Doctor Consultation" />
+                        <MenuItemMobile title="Book Blood Test" />
+                        <MenuItemMobile title="Donation Box" />
+                      </CollapsibleContent>
+                    </Collapsible>
+                    <MenuItemMobile title="Contact" />
+                  </div>
+                </SheetDescription>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Link href="/login">
+                  <Button className="w-full">Login</Button>
+                </Link>
+                <Link href="/signup">
+                  <Button className="w-full border-black" variant="outline">
+                    Signup
+                  </Button>
+                </Link>
+              </div>
+            </section>
+          </SheetContent>
+        </Sheet>
+      </div>
       <Link href="/">
         <div className="text-xl font-bold">Practo</div>
       </Link>
@@ -58,42 +121,6 @@ function Navbar() {
             </Button>
           </Link>
         </div>
-      </div>
-      <div className="block lg:hidden">
-        <Sheet>
-          <SheetTrigger>
-            <Menu size={32} />
-          </SheetTrigger>
-          <SheetContent side="left">
-            <section className="flex flex-col justify-between min-h-full">
-              <div>
-                <Link href="/">
-                  <SheetTitle className="my-2 text-xl">Practo</SheetTitle>
-                </Link>
-                <SheetDescription>
-                  <div>
-                    <MenuItemMobile title="About" />
-                    <MenuItemMobile title="Our Service" />
-                    <MenuItemMobile title="Doctor Consultation" />
-                    <MenuItemMobile title="Book Blood Test" />
-                    <MenuItemMobile title="Donation Box" />
-                    <MenuItemMobile title="Contact" />
-                  </div>
-                </SheetDescription>
-              </div>
-              <div className="flex flex-col gap-2">
-                <Link href="/login">
-                  <Button className="w-full">Login</Button>
-                </Link>
-                <Link href="/signup">
-                  <Button className="w-full border-black" variant="outline">
-                    Signup
-                  </Button>
-                </Link>
-              </div>
-            </section>
-          </SheetContent>
-        </Sheet>
       </div>
     </nav>
   );
