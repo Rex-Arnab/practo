@@ -27,15 +27,10 @@ const OfferCard = ({
       {image && (
         <div
           className={cn(
-            "relative h-[200px] max-w-52 border-b border-black/20",
+            "relative h-[200px] w-full border-b border-black/20",
             color
           )}>
-          <Image
-            src={image}
-            fill
-            alt={title}
-            className="max-w-[200px] mx-auto"
-          />
+          <Image src={image} fill alt={title} className="mx-auto" />
         </div>
       )}
       {Icon && (
@@ -64,29 +59,29 @@ function Offering() {
           <OfferCard
             title="Blood Donor"
             description="Direct Connect to Donor"
-            image="/instant_video_consulation.webp"
+            image="/instant_video_consulation.jpg"
             color="bg-purple-200"
           />
           <OfferCard
             title="Doctor's Appointment"
-            image="/nurse.webp"
+            image="/doctors-appointment.jpg"
             color="bg-blue-300"
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <OfferCard
             title="Medicines"
-            image="/surgeries.webp"
+            image="/Medicines.jpeg"
             color="bg-green-300"
           />
           <OfferCard
             title="Lab test"
-            image="/blood_donor.png"
+            image="/lab_test.jpeg"
             color="bg-orange-200"
           />
           <OfferCard
             title="Ambulance Services"
-            icon={Siren}
+            image="/ambulance-service.jpg"
             color="bg-purple-300"
             textColor="text-purple-900"
           />

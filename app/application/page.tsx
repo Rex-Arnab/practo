@@ -16,7 +16,7 @@ import axios from "axios";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 
-function LoginPage() {
+function ApplicationForm() {
   const [name, setName] = useState("");
   const [phone_number, setPhone_number] = useState("");
   const [email, setEmail] = useState("");
@@ -70,7 +70,7 @@ function LoginPage() {
         .then((res) => {
           toast({
             title: "Application Saved",
-            description: "Thank You For Registering",
+            description: "Thank You For Submititng Your Application",
             variant: "primary"
           });
         })
@@ -180,4 +180,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default ApplicationForm;

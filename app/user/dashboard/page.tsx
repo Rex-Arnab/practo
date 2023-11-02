@@ -9,9 +9,9 @@ function Dashboard() {
     <div className="">
       <UserNav />
       <main className="grid grid-cols-1 md:grid-cols-3 gap-5 p-5 md:p-10">
-        <Link href="/user/application">
+        <Link href="/application">
           <Card className="p-5">
-            <CardTitle>Application</CardTitle>
+            <CardTitle>New Application</CardTitle>
           </Card>
         </Link>
       </main>
