@@ -15,7 +15,8 @@ async function handler(req: Request) {
     blood_group,
     nearest_hospital,
     state,
-    district
+    district,
+    reportUrl
   } = body;
 
   if (
@@ -26,7 +27,8 @@ async function handler(req: Request) {
     !blood_group ||
     !nearest_hospital ||
     !state ||
-    !district
+    !district ||
+    !reportUrl
   ) {
     if (!name) {
       return NextResponse.json({
@@ -68,6 +70,11 @@ async function handler(req: Request) {
         status: 400,
         message: "District is required"
       });
+    } else if (!reportUrl) {
+      return NextResponse.json({
+        status: 400,
+        message: "Report is required"
+      });
     }
   }
 
@@ -75,6 +82,7 @@ async function handler(req: Request) {
     const application = await Application.create({
       name,
       phone_number,
+      reportUrl,
       email,
       age,
       blood_group,

@@ -29,6 +29,10 @@ const ApplicationSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  reportUrl: {
+    type: String,
+    required: true
+  },
   district: {
     type: String,
     required: true

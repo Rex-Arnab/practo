@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
+import UserNavbar from "@/components/UserNavbar";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -12,9 +12,10 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import { uploadFile } from "@/lib/fileUploader";
 import axios from "axios";
 import { Loader } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 function ApplicationForm() {
   const [name, setName] = useState("");
@@ -27,10 +28,13 @@ function ApplicationForm() {
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
   const [acknowledgement, setAcknowledgement] = useState(false);
+  const [file, setFile] = useState(null);
   const { toast } = useToast();
+  const uploadRef = useRef<any>(null);
 
   const handleSignup = async () => {
     setLoading(true);
+
     if (!acknowledgement) {
       toast({
         title: "Acknowledgement Required",
@@ -55,36 +59,48 @@ function ApplicationForm() {
         description: "Please Fill All The Fields",
         variant: "primary"
       });
-
-      axios
-        .post("/api/admin/applications/create", {
-          name,
-          email,
-          phone_number,
-          age,
-          blood_group,
-          nearest_hospital,
-          district,
-          state
-        })
-        .then((res) => {
-          toast({
-            title: "Application Saved",
-            description: "Thank You For Submititng Your Application",
-            variant: "primary"
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      return;
     }
+    if (!file) {
+      toast({
+        title: "Missing File",
+        description: "Please Upload Your Medical Report",
+        variant: "primary"
+      });
+      return;
+    }
+
+    const reportUrl = await uploadFile(file, `application/${email}`);
+
+    axios
+      .post("/api/admin/applications/create", {
+        name,
+        email,
+        phone_number,
+        age,
+        blood_group,
+        nearest_hospital,
+        reportUrl,
+        district,
+        state
+      })
+      .then((res) => {
+        toast({
+          title: "Application Saved",
+          description: "Thank You For Submititng Your Application",
+          variant: "primary"
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <section className="min-h-screen bg-slate-200">
-      <Navbar />
+      <UserNavbar />
       <main className="p-5 md:p-5 max-w-4xl mx-auto space-y-5">
         <h1 className="text-2xl font-bold mt-5">Register Your Application</h1>
         <div className="p-2 md:p-5 bg-white rounded shadow space-y-5">
@@ -152,6 +168,21 @@ function ApplicationForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+
+            <input
+              type="file"
+              onChange={(e: any) => {
+                setFile(e.target.files[0]);
+              }}
+              className="hidden"
+              ref={uploadRef}
+            />
+
+            <Button
+              className="w-full"
+              onClick={() => uploadRef.current.click()}>
+              Upload Blood Requisit form
+            </Button>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -171,7 +202,7 @@ function ApplicationForm() {
           <Button
             className="w-full transition duration-200 ease-in-out"
             onClick={handleSignup}
-            disabled={!acknowledgement}>
+            disabled={!acknowledgement || !file || loading}>
             {loading ? <Loader className="h-4 w-4 animate-spin" /> : "Register"}
           </Button>
         </div>
